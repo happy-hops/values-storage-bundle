@@ -1,2 +1,2 @@
-# values-storage-bundle
-Provides a simple service for storing and retrieving project wide settings from database
+# project-settings
+Provides a service for storing and retrieving procect wide settings from database

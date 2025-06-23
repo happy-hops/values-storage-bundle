@@ -1,0 +1,31 @@
+{
+    "name": "matbuesing/values-storage-bundle",
+    "description": "This bundle provides a service to store and retrieve project settings from the database",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Matthias Büsing",
+            "email": "matthias@buesing.de"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "symfony/config": "^7.3",
+        "symfony/framework-bundle": "^7.3",
+        "doctrine/orm": "3.4"
+    },
+    "require-dev": {},
+    "autoload": {
+        "psr-4": {
+            "MatBuesing\\ValuesStorageBundle\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "1.0-dev"
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
