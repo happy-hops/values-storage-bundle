@@ -1,8 +1,8 @@
 <?php
 
-namespace BuesingIt\ProjectSettingsBundle\Service;
+namespace MatBuesing\ValuesStorageBundle\Service;
 
-use BuesingIt\ProjectSettingsBundle\Dto\ProjectSetting\DtoInterface;
+use MatBuesing\ValuesStorageBundle\Dto\DtoInterface;
 
 interface ProjectSettingsServiceInterface
 {

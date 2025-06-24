@@ -1,6 +1,7 @@
 <?php
 
-namespace BuesingIt\ProjectSettingsBundle\Service;
+namespace MatBuesing\ValuesStorageBundle\Service;
+
 use Doctrine\DBAL\Schema\Schema;
 
 interface DbManagerInterface

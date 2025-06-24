@@ -1,6 +1,6 @@
 <?php
 
-namespace BuesingIt\ProjectSettingsBundle\Service;
+namespace MatBuesing\ValuesStorageBundle\Service;
 
 use Doctrine\DBAL\Connection as DBALConnection;
 use Doctrine\DBAL\Schema\Schema;

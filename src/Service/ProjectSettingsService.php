@@ -1,14 +1,14 @@
 <?php
 
-namespace BuesingIt\ProjectSettingsBundle\Service;
+namespace MatBuesing\ValuesStorageBundle\Service;
 
-use BuesingIt\ProjectSettingsBundle\Dto\ProjectSetting\DtoInterface;
+use MatBuesing\ValuesStorageBundle\Dto\DtoInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 final readonly class ProjectSettingsService implements ProjectSettingsServiceInterface
 {
     public function __construct(
-        #[Autowire(param: 'buesing_it_project_settings.default_values')]
+        #[Autowire(param: 'matbuesing_project_settings.default_values')]
         private array              $defaultValues,
         private DbManagerInterface $dbManager,
     )

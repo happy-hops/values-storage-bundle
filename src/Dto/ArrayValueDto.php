@@ -1,6 +1,6 @@
 <?php
 
-namespace BuesingIt\ProjectSettingsBundle\Dto\ProjectSetting;
+namespace MatBuesing\ValuesStorageBundle\Dto;
 
 class ArrayValueDto extends AbstractDto implements DtoInterface
 {

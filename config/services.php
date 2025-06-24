@@ -2,11 +2,11 @@
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use BuesingIt\ProjectSettingsBundle\EventListener\SchemaListener;
-use BuesingIt\ProjectSettingsBundle\Service\DbManager;
-use BuesingIt\ProjectSettingsBundle\Service\DbManagerInterface;
-use BuesingIt\ProjectSettingsBundle\Service\ProjectSettingsService;
-use BuesingIt\ProjectSettingsBundle\Service\ProjectSettingsServiceInterface;
+use MatBuesing\ValuesStorageBundle\EventListener\SchemaListener;
+use MatBuesing\ValuesStorageBundle\Service\DbManager;
+use MatBuesing\ValuesStorageBundle\Service\DbManagerInterface;
+use MatBuesing\ValuesStorageBundle\Service\ProjectSettingsService;
+use MatBuesing\ValuesStorageBundle\Service\ProjectSettingsServiceInterface;
 
 return function (ContainerConfigurator $container) {
     $services = $container->services()
@@ -16,11 +16,13 @@ return function (ContainerConfigurator $container) {
 
     $services
         ->set(DbManager::class)
-        ->alias(DbManagerInterface::class, DbManager::class);
+        ->alias(DbManagerInterface::class, DbManager::class)
+        ->private();
 
     $services
         ->set(SchemaListener::class)
-        ->tag('doctrine.event_listener', ['event' => 'postGenerateSchema']);
+        ->tag('doctrine.event_listener', ['event' => 'postGenerateSchema'])
+        ->private();
 
     $services
         ->set(ProjectSettingsService::class)

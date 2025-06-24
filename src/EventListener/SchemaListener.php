@@ -1,8 +1,8 @@
 <?php
 
-namespace BuesingIt\ProjectSettingsBundle\EventListener;
+namespace MatBuesing\ValuesStorageBundle\EventListener;
 
-use BuesingIt\ProjectSettingsBundle\Service\DbManager;
+use MatBuesing\ValuesStorageBundle\Service\DbManager;
 use Doctrine\ORM\Tools\Event\GenerateSchemaEventArgs;
 use Symfony\Bridge\Doctrine\SchemaListener\AbstractSchemaListener;
 
