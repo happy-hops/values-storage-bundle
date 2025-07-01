@@ -1,5 +1,5 @@
 {
-    "name": "matbuesing/values-storage-bundle",
+    "name": "happy-hops/values-storage-bundle",
     "description": "This bundle provides a service to store and retrieve project settings from the database",
     "type": "symfony-bundle",
     "license": "MIT",
@@ -14,11 +14,27 @@
         "symfony/config": "^7.3",
         "symfony/framework-bundle": "^7.3",
         "doctrine/orm": "3.4",
-        "symfony/doctrine-bridge": "^7.3"
+        "symfony/doctrine-bridge": "^7.3",
+        "symfony/dotenv": "^7.3",
+        "symfony/debug": "^4.4"
+    },
+    "require-dev": {
+        "doctrine/doctrine-bundle": "^2.15",
+        "liip/test-fixtures-bundle": "^3.4",
+        "phpstan/phpstan": "^2.1",
+        "symfony/phpunit-bridge": "^7.3",
+        "symfony/var-exporter": "^7.3",
+        "var-lab/coding-standard": "^2.1"
     },
     "autoload": {
         "psr-4": {
-            "MatBuesing\\ValuesStorageBundle\\": "src/"
+            "HappyHops\\ValuesStorageBundle\\": "src/"
+        },
+        "exclude-from-classmap": [ "/Tests/" ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "HappyHops\\ValuesStorageBundle\\Tests\\": "tests/"
         }
     },
     "extra": {
@@ -27,5 +43,18 @@
         }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "config": {
+        "allow-plugins": {
+            "symfony/runtime": true,
+            "symfony/flex": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
+    "scripts": {
+        "auto-scripts": {
+            "cache:clear": "symfony-cmd",
+            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+        }
+    }
 }

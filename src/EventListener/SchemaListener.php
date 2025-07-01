@@ -1,20 +1,20 @@
 <?php
 
-namespace MatBuesing\ValuesStorageBundle\EventListener;
+namespace HappyHops\ValuesStorageBundle\EventListener;
 
-use MatBuesing\ValuesStorageBundle\Service\DbManager;
+use HappyHops\ValuesStorageBundle\Repository\StoredValueRepository;
 use Doctrine\ORM\Tools\Event\GenerateSchemaEventArgs;
 use Symfony\Bridge\Doctrine\SchemaListener\AbstractSchemaListener;
 
 class SchemaListener extends AbstractSchemaListener
 {
     public function __construct(
-        private readonly DbManager $dbManager,
+        private readonly StoredValueRepository $storedValueRepo,
     )
     {}
 
     public function postGenerateSchema(GenerateSchemaEventArgs $event): void
     {
-        $this->dbManager->configureSchema($event->getSchema());
+        $this->storedValueRepo->configureSchema($event->getSchema());
     }
 }

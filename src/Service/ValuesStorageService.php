@@ -1,27 +1,28 @@
 <?php
 
-namespace MatBuesing\ValuesStorageBundle\Service;
+namespace HappyHops\ValuesStorageBundle\Service;
 
-use MatBuesing\ValuesStorageBundle\Dto\DtoInterface;
+use HappyHops\ValuesStorageBundle\Dto\DtoInterface;
+use HappyHops\ValuesStorageBundle\Repository\StoredValueRepository;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
-final readonly class ProjectSettingsService implements ProjectSettingsServiceInterface
+final readonly class ValuesStorageService implements ValuesStorageServiceInterface
 {
     public function __construct(
-        #[Autowire(param: 'matbuesing_project_settings.default_values')]
-        private array              $defaultValues,
-        private DbManagerInterface $dbManager,
+        #[Autowire(param: 'happy_hops_values_storage.default_values')]
+        private array                 $defaultValues,
+        private StoredValueRepository $storedValueRepo,
     )
     {}
 
     public function save(DtoInterface $dto): void
     {
-        $this->dbManager->saveValue($dto->getName(), $dto->getParam(), serialize($dto->getValue()));
+        $this->storedValueRepo->persist($dto->getName(), $dto->getParam(), serialize($dto->getValue()));
     }
 
     public function load(DtoInterface $dto): void
     {
-        $value = $this->dbManager->getValue($dto->getName(), $dto->getParam());
+        $value = $this->storedValueRepo->find($dto->getName(), $dto->getParam());
 
         $value = ($value === null)
             ? $this->getDefaultValue($dto->getName(), $dto->getParam())

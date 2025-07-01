@@ -1,6 +1,6 @@
 <?php
 
-namespace MatBuesing\ValuesStorageBundle\Dto;
+namespace HappyHops\ValuesStorageBundle\Dto;
 
 class FloatValueDto extends AbstractDto implements DtoInterface
 {

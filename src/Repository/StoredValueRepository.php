@@ -1,21 +1,23 @@
 <?php
 
-namespace MatBuesing\ValuesStorageBundle\Service;
+namespace HappyHops\ValuesStorageBundle\Repository;
 
 use Doctrine\DBAL\Connection as DBALConnection;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Types\Types;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
-class DbManager implements DbManagerInterface
+final class StoredValueRepository
 {
-    private string $table = 'matbue_project_settings';
+    private string $table = 'hh_values_storage';
 
     public function __construct(
+        #[Autowire(service: 'doctrine.dbal.default_connection')]
         private readonly DBALConnection $driverConnection,
     )
     {}
 
-    public function getValue(string $name, string|null $param): string|null
+    public function find(string $name, string|null $param): string|null
     {
         $qb = $this->driverConnection->createQueryBuilder()
             ->select('value')
@@ -34,7 +36,7 @@ class DbManager implements DbManagerInterface
             ->fetchOne();
     }
 
-    public function saveValue(string $name, string|null $param, string $value): void
+    public function persist(string $name, string|null $param, string $value): void
     {
         $qb = $this->driverConnection->createQueryBuilder()
             ->select('COUNT(*)')
@@ -57,7 +59,7 @@ class DbManager implements DbManagerInterface
             : $this->updateRow($name, $param, $value);
     }
 
-    public function deleteValue(string $name, string|null $param): void
+    public function delete(string $name, string|null $param): void
     {
         $qb = $this->driverConnection->createQueryBuilder()
             ->delete('value')
@@ -81,7 +83,7 @@ class DbManager implements DbManagerInterface
         $values = [
             'name'        => ':name',
             'value'       => ':value',
-            'modified_at' => 'NOW()',
+            'modified_at' => ':modifiedAt',
         ];
 
         if ($param !== null) {
@@ -94,6 +96,7 @@ class DbManager implements DbManagerInterface
             ->setParameter('name', $name)
             ->setParameter('param', $param)
             ->setParameter('value', $value)
+            ->setParameter('modifiedAt', \date('Y-m-d H:i:s'))
             ->executeQuery();
     }
 
@@ -102,9 +105,10 @@ class DbManager implements DbManagerInterface
         $qb = $this->driverConnection->createQueryBuilder()
             ->update($this->table)
             ->set('value', ':value')
-            ->set('modified_at', 'NOW()')
+            ->set('modified_at', ':modifiedAt')
             ->where('name = :name')
             ->setParameter('name', $name)
+            ->setParameter('modifiedAt', \date('Y-m-d H:i:s'))
             ->setParameter('value', $value);
 
         ($param === null)
@@ -130,5 +134,12 @@ class DbManager implements DbManagerInterface
         $table->addColumn('modified_at', Types::DATETIME_IMMUTABLE, ['notnull' => true]);
         $table->setPrimaryKey(['id']);
         $table->addUniqueIndex(['name', 'param']);
+
+        $platform = $this->driverConnection->getDatabasePlatform();
+        $sqls = $schema->toSql($platform);
+
+        foreach ($sqls as $sql) {
+            $this->driverConnection->executeStatement($sql);
+        }
     }
 }

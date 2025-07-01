@@ -2,21 +2,20 @@
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use MatBuesing\ValuesStorageBundle\EventListener\SchemaListener;
-use MatBuesing\ValuesStorageBundle\Service\DbManager;
-use MatBuesing\ValuesStorageBundle\Service\DbManagerInterface;
-use MatBuesing\ValuesStorageBundle\Service\ProjectSettingsService;
-use MatBuesing\ValuesStorageBundle\Service\ProjectSettingsServiceInterface;
+use HappyHops\ValuesStorageBundle\EventListener\SchemaListener;
+use HappyHops\ValuesStorageBundle\Repository\StoredValueRepository;
+use HappyHops\ValuesStorageBundle\Service\ValuesStorageService;
+use HappyHops\ValuesStorageBundle\Service\ValuesStorageServiceInterface;
 
-return function (ContainerConfigurator $container) {
+return function (ContainerConfigurator $container): void
+{
     $services = $container->services()
         ->defaults()
             ->autowire()
             ->autoconfigure();
 
     $services
-        ->set(DbManager::class)
-        ->alias(DbManagerInterface::class, DbManager::class)
+        ->set(StoredValueRepository::class)
         ->private();
 
     $services
@@ -25,7 +24,7 @@ return function (ContainerConfigurator $container) {
         ->private();
 
     $services
-        ->set(ProjectSettingsService::class)
-        ->alias(ProjectSettingsServiceInterface::class, ProjectSettingsService::class)
+        ->set(ValuesStorageService::class)
+        ->alias(ValuesStorageServiceInterface::class, ValuesStorageService::class)
         ->public();
 };
